@@ -4,6 +4,11 @@ Scans a specified project folder and outputs a summary:
 - total number of files
 - total sum of lines of code
 
+<p align="center">
+<img width="842" alt="shot" src="https://github.com/RustamIrzaev/source-code-scanner/assets/352703/89d54144-9c84-4a61-ae17-7375a7a0c69d">
+</p>
+
+
 ## Usage
 
 `cargo run <folder_path> <file_extension>`
