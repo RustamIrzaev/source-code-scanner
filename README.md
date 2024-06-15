@@ -11,19 +11,31 @@ Scans a specified project folder and outputs a summary:
 
 ## Usage
 
-`cargo run <folder_path> <file_extension>`
+Simple run:
+`cargo run -- -f <folder_path> -e <file_extension>`
 
-e.g. `cargo run /home/user/projects/ rs`
+With ignored folders:
+`cargo run -- -f <folder_path> -e <file_extension> -i <folder1>,<folder2>`
+
+With hardcoded ignored folders:
+`cargo run -- -f <folder_path> -e <file_extension> --hc`
+
+Real example:
+`cargo run -- -f /home/user/projects/my_project -e rs -i target,.git`
 
 ## Parameters
-- `<folder_path>`: the path to the project folder
-- `<file_extension>`: the file extension of the files to be scanned
+- `-f` or `--folder`: the path to the project folder
+- `-e` or `--extension`: the file extension of the files to be scanned
+- `-i` or `--ignore`: the list of folders to be ignored, comma separated
+- `--hc`: use hardcoded list of ignored folders _(see below)_. Please note that `-i` parameter has higher priority than this one
+- `-V` or `--version`: prints the version of the program
+- `-h` or `--help`: prints the help message
 
 ## Ignored folders
 At this moment, the list of ignored folders are hardcoded:
-".idea", ".git", "node_modules", "obj", "bin", "build", "out", "libs".
+".idea", ".git", "node_modules", "obj", "bin", "build", "out", "dist".
 
-However, you can change this directly from the code - see `exclude_folders` variable in `main.rs` file.
+However, you can change this directly from the code - see `exclude_folders_embedded` variable in `main.rs` file.
 
 ## License
 

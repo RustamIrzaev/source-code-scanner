@@ -1,7 +1,8 @@
 [package]
 name = "source-code-scanner"
-version = "0.1.0"
+version = "1.0.1"
 edition = "2021"
 
 [dependencies]
 walkdir = "2.5.0"
+clap = {version = "4.5.7", features = ["derive"]}

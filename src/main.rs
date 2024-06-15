@@ -2,26 +2,45 @@ use std::{
     io::{self, BufRead},
     fs::File,
 };
+use clap::Parser;
 use walkdir::{DirEntry, WalkDir};
 
+#[derive(Parser, Debug)]
+#[command(name = "source code counter", version,
+about = "Check source code vitals summary", long_about = None)]
+struct Cli {
+    #[arg(short = 'f', long = "folder", required = true, help = "Folder path to search for files")]
+    folder_path: String,
+    #[arg(short, long, required = true, help = "File extension to search for (ie. 'rs' for Rust files)")]
+    extension: String,
+    #[arg(short, long = "ignore", value_delimiter = ',', help = "Folders to exclude from search")]
+    ignore_folders: Option<Vec<String>>,
+    #[arg(long = "hc", default_value = "false", help = "Use hardcoded exclude folders")]
+    use_hardcoded_exclude: bool,
+}
+
 fn main() {
-    let exclude_folders = vec![
+    let exclude_folders_embedded = vec![
         ".idea", ".git",
         "node_modules",
         "obj", "bin",
-        "build", "out",
-        "libs"
+        "build", "out", "dist",
     ];
 
-    let args: Vec<String> = std::env::args().collect();
+    let cli = Cli::parse();
 
-    if args.len() != 3 {
-        eprintln!("Usage: {} <folder_path> <file_extension>", args[0]);
-        std::process::exit(1);
-    }
+    let folder_path = &cli.folder_path;
+    let file_extension = &cli.extension;
+    let passed_exclude_folders = match &cli.ignore_folders {
+        Some(folders) => folders.iter().map(String::as_str).collect(),
+        None => Vec::new(),
+    };
 
-    let folder_path = &args[1];
-    let file_extension = &args[2];
+    let exclude_folders = if cli.use_hardcoded_exclude && passed_exclude_folders.is_empty() {
+        exclude_folders_embedded
+    } else {
+        passed_exclude_folders
+    };
 
     let mut total_files = 0;
     let mut total_lines_in_all_files = 0;
