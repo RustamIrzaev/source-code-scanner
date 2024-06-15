@@ -5,7 +5,7 @@ Scans a specified project folder and outputs a summary:
 - total sum of lines of code
 
 <p align="center">
-<img width="842" alt="shot" src="https://github.com/RustamIrzaev/source-code-scanner/assets/352703/89d54144-9c84-4a61-ae17-7375a7a0c69d">
+  <img width="833" alt="shot" src="https://github.com/RustamIrzaev/source-code-scanner/assets/352703/2d3963ae-ef6d-4bac-b0dc-d909148edebb">
 </p>
 
 
