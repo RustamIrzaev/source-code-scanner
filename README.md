@@ -23,6 +23,8 @@ With hardcoded ignored folders:
 Real example:
 `cargo run -- -f /home/user/projects/my_project -e rs -i target,.git`
 
+> Note. If you run the application not with `cargo run`, you should remove `--` from the argument.
+
 ## Parameters
 - `-f` or `--folder`: the path to the project folder
 - `-e` or `--extension`: the file extension of the files to be scanned
@@ -35,7 +37,7 @@ Real example:
 At this moment, the list of ignored folders are hardcoded:
 ".idea", ".git", "node_modules", "obj", "bin", "build", "out", "dist".
 
-However, you can change this directly from the code - see `exclude_folders_embedded` variable in `main.rs` file.
+However, you can change this directly from the code - see `hardcoded.rs` file for a `EXCLUDE_FOLDERS_EMBEDDED` slice.
 
 ## License
 

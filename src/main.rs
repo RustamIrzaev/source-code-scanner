@@ -1,32 +1,17 @@
+mod models;
+mod hardcoded;
+
 use std::{
     io::{self, BufRead},
     fs::File,
 };
 use clap::Parser;
+use colored::Colorize;
 use walkdir::{DirEntry, WalkDir};
-
-#[derive(Parser, Debug)]
-#[command(name = "source code counter", version,
-about = "Check source code vitals summary", long_about = None)]
-struct Cli {
-    #[arg(short = 'f', long = "folder", required = true, help = "Folder path to search for files")]
-    folder_path: String,
-    #[arg(short, long, required = true, help = "File extension to search for (ie. 'rs' for Rust files)")]
-    extension: String,
-    #[arg(short, long = "ignore", value_delimiter = ',', help = "Folders to exclude from search")]
-    ignore_folders: Option<Vec<String>>,
-    #[arg(long = "hc", default_value = "false", help = "Use hardcoded exclude folders")]
-    use_hardcoded_exclude: bool,
-}
+use crate::hardcoded::EXCLUDE_FOLDERS_EMBEDDED;
+use crate::models::{Cli};
 
 fn main() {
-    let exclude_folders_embedded = vec![
-        ".idea", ".git",
-        "node_modules",
-        "obj", "bin",
-        "build", "out", "dist",
-    ];
-
     let cli = Cli::parse();
 
     let folder_path = &cli.folder_path;
@@ -37,7 +22,7 @@ fn main() {
     };
 
     let exclude_folders = if cli.use_hardcoded_exclude && passed_exclude_folders.is_empty() {
-        exclude_folders_embedded
+        EXCLUDE_FOLDERS_EMBEDDED.iter().map(|&s| s).collect()
     } else {
         passed_exclude_folders
     };
@@ -46,7 +31,7 @@ fn main() {
     let mut total_lines_in_all_files = 0;
     let mut file_paths = Vec::new();
 
-    println!("Searching for files in folder {}", folder_path);
+    println!("Searching for files in folder {}", folder_path.bright_blue());
     println!();
 
     for entry in WalkDir::new(folder_path)
@@ -70,15 +55,17 @@ fn main() {
                 total_lines_in_all_files += count;
 
                 let canonical_path = path.display().to_string().replace(folder_path, "");
-                println!("File {}, lines: {}", remove_first_char(&canonical_path), count);
+                println!("File {}, lines: {}",
+                         remove_first_char(&canonical_path).to_string().bright_blue(),
+                         count.to_string().bright_green());
             },
             Err(ex) => eprintln!("Error reading a file {:?}: {}", path, ex),
         };
     }
 
     println!();
-    println!("Total files found: {}", total_files);
-    println!("Total lines in all files: {}", total_lines_in_all_files);
+    println!("Total files found: {}", total_files.to_string().bright_green());
+    println!("Total lines in all files: {}", total_lines_in_all_files.to_string().bright_green());
 }
 
 fn count_lines_in_file<F>(filename: F) -> io::Result<usize>
