@@ -15,4 +15,12 @@ pub struct Cli {
 
     #[arg(long = "hc", default_value = "false", help = "Use hardcoded exclude folders")]
     pub use_hardcoded_exclude: bool,
+
+    #[arg(short = 'r', long = "report", help = "Generate a markdown report")]
+    pub generate_report: bool,
+}
+
+pub struct FileResult {
+    pub path: String,
+    pub lines_count: usize,
 }

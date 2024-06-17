@@ -1,8 +1,13 @@
 # Source Code Scanner
 
-Scans a specified project folder and outputs a summary:
-- total number of files
-- total sum of lines of code
+## Features
+- ☑️ Scan a project folder
+- ☑️ Count the total number of files by extension
+- ☑️ Count the total sum of lines of code (ignoring empty lines)
+- ☑️ Ignore specified folders
+- ☑️ Generate a small markdown report
+- ☑️ Colorized output
+- ☑️ Written in Rust
 
 <p align="center">
   <img width="833" alt="shot" src="https://github.com/RustamIrzaev/source-code-scanner/assets/352703/2d3963ae-ef6d-4bac-b0dc-d909148edebb">
@@ -20,22 +25,27 @@ With ignored folders:
 With hardcoded ignored folders:
 `cargo run -- -f <folder_path> -e <file_extension> --hc`
 
-Real example:
-`cargo run -- -f /home/user/projects/my_project -e rs -i target,.git`
+Real example (with report generation):
+`cargo run -- -f /home/user/projects/my_project -e rs -i target,.git -f`
 
-> Note. If you run the application not with `cargo run`, you should remove `--` from the argument.
+> Note. If you run the application not with `cargo run` (for example, you built binaries), you should remove `--` from the arguments.
 
 ## Parameters
 - `-f` or `--folder`: the path to the project folder
 - `-e` or `--extension`: the file extension of the files to be scanned
 - `-i` or `--ignore`: the list of folders to be ignored, comma separated
 - `--hc`: use hardcoded list of ignored folders _(see below)_. Please note that `-i` parameter has higher priority than this one
+- `-r` or `--report`: generate a small markdown report (*.md extension)
 - `-V` or `--version`: prints the version of the program
 - `-h` or `--help`: prints the help message
 
+## Report
+The report is generated in the project folder with the name `report_scs.md`.
+The demo report is available [here](demo_report.md).
+
 ## Ignored folders
 At this moment, the list of ignored folders are hardcoded:
-".idea", ".git", "node_modules", "obj", "bin", "build", "out", "dist".
+`.idea`, `.git`, `node_modules`, `obj`, `bin`, `build`, `out`, `dist`.
 
 However, you can change this directly from the code - see `hardcoded.rs` file for a `EXCLUDE_FOLDERS_EMBEDDED` slice.
 
