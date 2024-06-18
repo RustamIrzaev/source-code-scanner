@@ -10,7 +10,7 @@
 - ☑️ Written in Rust
 
 <p align="center">
-  <img width="833" alt="shot" src="https://github.com/RustamIrzaev/source-code-scanner/assets/352703/2d3963ae-ef6d-4bac-b0dc-d909148edebb">
+  <img width="842" alt="Screenshot 2024-06-18 at 21 15 55" src="https://github.com/RustamIrzaev/source-code-scanner/assets/352703/685ba6e5-51b2-46aa-8647-17e8294b4f7c">
 </p>
 
 
