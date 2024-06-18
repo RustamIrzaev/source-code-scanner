@@ -19,7 +19,7 @@ pub struct Cli {
     #[arg(short = 'r', long = "report", help = "Generate a markdown report")]
     pub generate_report: bool,
 
-    #[arg(long = "maxdepth", help = "Maximum depth for recursive scanning")]
+    #[arg(long = "max-depth", help = "Maximum depth for recursive scanning")]
     pub max_depth: Option<usize>,
 
     #[arg(short, long = "stats", help = "Show extended summary statistics (average, median, std deviation)")]
