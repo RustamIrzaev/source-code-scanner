@@ -32,16 +32,24 @@ Real example (with report generation):
 
 ## Parameters
 ### General
-- `-f` or `--folder`: the path to the project folder
-- `-e` or `--extension`: the file extension of the files to be scanned
-- `-i` or `--ignore`: the list of folders to be ignored, comma separated
-- `-r` or `--report`: generate a small markdown report (*.md extension)
-- `-s` or `--stats`: show additional summary statistics (average, median, std deviation)
+- `-f`/`--folder`
+  - the path to a project folder 
+  - usage `-f <folder>`
+- `-e`/`--extension`
+  - the file extension of the files to be scanned
+  - usage `-e <extension>`
+- `-i`/`--ignore`
+  - the list of folders to be ignored, comma separated
+  - usage `-i <folder1>,<folder2>,<folder3>`
+- `-r`/`--report`: generate a small markdown report (*.md extension)
+- `-s`/`--stats`: show additional summary statistics (average, median, std deviation)
 ### Misc
 - `--hce`: use hardcoded list of ignored folders _(see below)_. Please note that `-i` parameter has higher priority than this one
-- `--max-depth`: the maximum depth of the folder scanning _(default: 10)_
-- `-V` or `--version`: prints the version of the program
-- `-h` or `--help`: prints the help message
+- `--max-depth`
+  - the maximum depth of the folder scanning _(default: 10)_
+  - usage `--max-depth <depth>`
+- `-V`/`--version`: prints the version of the program
+- `-h`/`--help`: prints the help message
 
 ## Report
 The report is generated in the project folder with the name `report_scs.md`.
