@@ -23,7 +23,7 @@ With ignored folders:
 `cargo run -- -f <folder_path> -e <file_extension> -i <folder1>,<folder2>`
 
 With hardcoded ignored folders:
-`cargo run -- -f <folder_path> -e <file_extension> --hc`
+`cargo run -- -f <folder_path> -e <file_extension> --hce`
 
 Real example (with report generation):
 `cargo run -- -f /home/user/projects/my_project -e rs -i target,.git -f`
@@ -31,11 +31,14 @@ Real example (with report generation):
 > Note. If you run the application not with `cargo run` (for example, you built binaries), you should remove `--` from the arguments.
 
 ## Parameters
+### General
 - `-f` or `--folder`: the path to the project folder
 - `-e` or `--extension`: the file extension of the files to be scanned
 - `-i` or `--ignore`: the list of folders to be ignored, comma separated
-- `--hc`: use hardcoded list of ignored folders _(see below)_. Please note that `-i` parameter has higher priority than this one
 - `-r` or `--report`: generate a small markdown report (*.md extension)
+### Misc
+- `--hce`: use hardcoded list of ignored folders _(see below)_. Please note that `-i` parameter has higher priority than this one
+- `--max-depth`: the maximum depth of the folder scanning _(default: 10)_
 - `-V` or `--version`: prints the version of the program
 - `-h` or `--help`: prints the help message
 

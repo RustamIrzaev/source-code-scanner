@@ -12,6 +12,8 @@ use walkdir::{DirEntry, WalkDir};
 use crate::hardcoded::EXCLUDE_FOLDERS_EMBEDDED;
 use crate::models::{Cli, FileResult};
 
+const DEFAULT_MAX_DEPTH: usize = 10;
+
 fn main() {
     let cli = Cli::parse();
 
@@ -34,6 +36,7 @@ fn main() {
     println!();
 
     for entry in WalkDir::new(folder_path)
+        .max_depth(cli.max_depth.unwrap_or(DEFAULT_MAX_DEPTH))
         .into_iter().filter_entry(|e| should_include_entry(e, &exclude_folders)) {
         let entry = entry.unwrap();
         let path = entry.path();
