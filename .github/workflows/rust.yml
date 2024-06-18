@@ -3,7 +3,7 @@ name: Rust Build and Release
 on:
   push:
     branches:
-      - main
+      - main  # Change this to your main branch name if different
 
 jobs:
   build:
@@ -20,15 +20,17 @@ jobs:
           profile: minimal
           toolchain: stable
 
-      - name: Read Cargo.toml
-        id: read_cargo_toml
-        run: echo ::set-output name=version::$(grep -oP '(?<=version = ")[^"]*' Cargo.toml)
+      - name: Extract Version from Cargo.toml
+        id: extract_version
+        run: |
+          VERSION=$(grep -Po '(?<=^version = ")[^"]*' Cargo.toml | head -n1)
+          echo "::set-output name=version::${VERSION}"
 
       - name: Build
         run: |
           cargo build --release
         env:
-          APP_VERSION: ${{ steps.read_cargo_toml.outputs.version }}
+          APP_VERSION: ${{ steps.extract_version.outputs.version }}
 
       - name: Package Binary
         run: |
@@ -42,8 +44,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.read_cargo_toml.outputs.version }}
-          release_name: Release v${{ steps.read_cargo_toml.outputs.version }}
+          tag_name: v${{ steps.extract_version.outputs.version }}
+          release_name: Release v${{ steps.extract_version.outputs.version }}
           body: |
             Release description goes here
           draft: false
