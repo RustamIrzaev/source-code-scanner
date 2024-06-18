@@ -1,7 +1,11 @@
 [package]
 name = "source-code-scanner"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
+repository = "https://github.com/RustamIrzaev/source-code-scanner"
+authors = ["Rustam Irzaiev"]
+description = "Not that simple source code scanner with reports, statistics and more"
+license = "MIT"
 
 [dependencies]
 walkdir = "2.5.0"

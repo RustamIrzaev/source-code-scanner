@@ -7,8 +7,8 @@ pub struct Cli {
     #[arg(short = 'f', long = "folder", required = true, help = "Folder path to search for files")]
     pub folder_path: String,
 
-    #[arg(short, long, required = true, help = "File extension to search for (ie. 'rs' for Rust files)")]
-    pub extension: String,
+    #[arg(short, long = "extensions", value_delimiter = ',', required = true, help = "File extension to search for (ie. 'rs' for Rust files)")]
+    pub extensions: Vec<String>,
 
     #[arg(short, long = "ignore", value_delimiter = ',', help = "Folders to exclude from search")]
     pub ignore_folders: Option<Vec<String>>,

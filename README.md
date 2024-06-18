@@ -2,10 +2,12 @@
 
 ## Features
 - ☑️ Scan a project folder
+- ☑️ Search for files with a specific extension(s)
 - ☑️ Count the total number of files by extension
 - ☑️ Count the total sum of lines of code (ignoring empty lines)
-- ☑️ Ignore specified folders
-- ☑️ Generate a small markdown report
+- ☑️ Calculate the average, median, and standard deviation of the lines of code
+- ☑️ Ignore specified folder(s)
+- ☑️ Generate a tiny markdown report
 - ☑️ Colorized output
 - ☑️ Written in Rust
 
@@ -35,9 +37,9 @@ Real example (with report generation):
 - `-f`/`--folder`
   - the path to a project folder 
   - usage `-f <folder>`
-- `-e`/`--extension`
-  - the file extension of the files to be scanned
-  - usage `-e <extension>`
+- `-e`/`--extensions`
+  - the file extension of the files to be scanned (comma separated)
+  - usage `-e <extension1>,<extension2>`
 - `-i`/`--ignore`
   - the list of folders to be ignored, comma separated
   - usage `-i <folder1>,<folder2>,<folder3>`

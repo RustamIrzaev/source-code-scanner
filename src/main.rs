@@ -18,7 +18,6 @@ fn main() {
     let cli = Cli::parse();
 
     let folder_path = &cli.folder_path;
-    let file_extension = &cli.extension;
     let passed_exclude_folders = match &cli.ignore_folders {
         Some(folders) => folders.iter().map(String::as_str).collect(),
         None => Vec::new(),
@@ -41,8 +40,15 @@ fn main() {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.is_file() && path.extension().map_or(false, |ext| ext.to_string_lossy() == file_extension.to_string()) {
-            file_paths.push(path.to_path_buf());
+        // if path.is_file() && path.extension().map_or(false, |ext| ext.to_string_lossy() == file_extension.to_string()) {
+        //     file_paths.push(path.to_path_buf());
+        // }
+
+        if path.is_file() {
+            let extension = path.extension().and_then(|ext| ext.to_str()).unwrap_or("");
+            if cli.extensions.iter().any(|ext| ext == extension) {
+                file_paths.push(path.to_path_buf());
+            }
         }
     }
 
