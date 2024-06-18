@@ -1,18 +1,61 @@
-name: Rust
+name: Rust Build and Release
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-env:
-  CARGO_TERM_COLOR: always
+    branches:
+      - main
 
 jobs:
   build:
+    name: Build and Release
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: cargo build --release
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - name: Read Cargo.toml
+        id: read_cargo_toml
+        run: echo ::set-output name=version::$(grep -oP '(?<=version = ")[^"]*' Cargo.toml)
+
+      - name: Build
+        run: |
+          cargo build --release
+        env:
+          APP_VERSION: ${{ steps.read_cargo_toml.outputs.version }}
+
+      - name: Package Binary
+        run: |
+          mkdir -p release
+          cp target/release/source-code-scanner release/
+        working-directory: ${{ github.workspace }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.read_cargo_toml.outputs.version }}
+          release_name: Release v${{ steps.read_cargo_toml.outputs.version }}
+          body: |
+            Release description goes here
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release/source-code-scanner
+          asset_name: source-code-scanner
+          asset_content_type: application/octet-stream
