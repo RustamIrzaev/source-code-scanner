@@ -21,6 +21,9 @@ pub struct Cli {
 
     #[arg(long = "maxdepth", help = "Maximum depth for recursive scanning")]
     pub max_depth: Option<usize>,
+
+    #[arg(short, long = "stats", help = "Show extended summary statistics (average, median, std deviation)")]
+    pub statistics: bool,
 }
 
 pub struct FileResult {

@@ -75,6 +75,14 @@ fn main() {
         .fold(0, |sum, val| sum + val.lines_count)
         .to_string().bright_green());
 
+    if cli.statistics {
+        let (average, median, std_deviation) = extended_statistics(&files_data);
+        println!();
+        println!("Average lines per file: {}", average.to_string().bright_green());
+        println!("Median lines per file: {}", median.to_string().bright_green());
+        println!("Standard deviation: {}", std_deviation.to_string().bright_green());
+    }
+
     if cli.generate_report {
         generate_markdown_report(&files_data, folder_path.clone());
     }
@@ -124,4 +132,33 @@ fn generate_markdown_report(data: &Vec<FileResult>, folder_path: String) {
     file.write_all(report.as_bytes()).expect("Unable to write data");
 
     println!("\nReport generated in {}", report_path.bright_blue());
+}
+
+fn extended_statistics(data: &Vec<FileResult>) -> (usize, usize, f64) {
+    let lines_count: Vec<_> = data.iter().map(|file| file.lines_count).collect();
+
+    if lines_count.is_empty() {
+        return (0, 0, 0.0);
+    }
+
+    let num_files = lines_count.len();
+    let total_lines: usize = lines_count.iter().sum();
+    let average = total_lines / num_files;
+
+    let mut sorted = lines_count.to_vec();
+    sorted.sort();
+
+    let median = if num_files % 2 == 0 {
+        let mid = num_files / 2;
+        (sorted[mid - 1] + sorted[mid]) / 2
+    } else {
+        sorted[num_files / 2]
+    };
+
+    let variance = lines_count.iter()
+        .map(|&count| (count as f64 - average as f64).powf(2.0))
+        .sum::<f64>() / num_files as f64;
+    let std_deviation = variance.sqrt();
+
+    (average, median, std_deviation)
 }

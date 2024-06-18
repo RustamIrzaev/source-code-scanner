@@ -36,6 +36,7 @@ Real example (with report generation):
 - `-e` or `--extension`: the file extension of the files to be scanned
 - `-i` or `--ignore`: the list of folders to be ignored, comma separated
 - `-r` or `--report`: generate a small markdown report (*.md extension)
+- `-s` or `--stats`: show additional summary statistics (average, median, std deviation)
 ### Misc
 - `--hce`: use hardcoded list of ignored folders _(see below)_. Please note that `-i` parameter has higher priority than this one
 - `--max-depth`: the maximum depth of the folder scanning _(default: 10)_
