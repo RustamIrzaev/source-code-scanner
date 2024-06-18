@@ -27,8 +27,8 @@ With ignored folders:
 With hardcoded ignored folders:
 `cargo run -- -f <folder_path> -e <file_extension> --hce`
 
-Real example (with report generation):
-`cargo run -- -f /home/user/projects/my_project -e rs -i target,.git -f`
+Real example (with report generation and an extended statistics):
+`cargo run -- -f /home/user/projects/my_project -e rs -i target,.git -r -s`
 
 > Note. If you run the application not with `cargo run` (for example, you built binaries), you should remove `--` from the arguments.
 
