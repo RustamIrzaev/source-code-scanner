@@ -27,7 +27,7 @@
 Clone the repository and build the project:
 
 ```bash
-git clone https://github.com/RustamIrzaev/source-code-scanner
+git clone https://github.com/RustamIrzaev/source-code-scanner.git
 cd source-code-scanner
 cargo build --release # builds the project
 
